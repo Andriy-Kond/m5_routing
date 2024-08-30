@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
+import { CardWrapper, Container, ProductName } from "./ProductsList.styled";
 
 function ProductsList({ products }) {
   return (
     <>
       <p>The PRODUCT LIST element with own self link in PRODUCTS page</p>
-      <ul>
+      <Container>
         {products.map(product => (
-          <li key={product.id}>
+          <CardWrapper key={product.id}>
             <Link to={product.id}>
               <img src="https://via.placeholder.com/200x100" alt="plug" />
-              <p> {product.name}</p>
+              <ProductName> {product.name}</ProductName>
             </Link>
-          </li>
+          </CardWrapper>
         ))}
-      </ul>
+      </Container>
     </>
   );
 }

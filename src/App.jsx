@@ -1,36 +1,32 @@
-import { NavLink, Route, Routes } from "react-router-dom";
-
-import About from "pages/About";
-import styled from "@emotion/styled";
+import { Route, Routes } from "react-router-dom";
 
 import Home from "pages/Home";
+import About from "pages/About";
 import Products from "pages/Products";
-import NotFoundPage from "pages/NotFoundPage";
 import ProductDetails from "pages/ProductDetails";
+import NotFoundPage from "pages/NotFoundPage";
 
-const StyledNavLink = styled(NavLink)`
-  color: #272727;
-
-  &.active {
-    color: #ff4400;
-  }
-`;
+import Mission from "components/Mission";
+import Team from "components/Team";
+import Reviews from "components/Reviews";
+import SharedLayout from "components/SharedLayout";
 
 function App() {
   return (
     <>
-      <nav>
-        <StyledNavLink to="/">Home</StyledNavLink>
-        <StyledNavLink to="about">About</StyledNavLink>
-        <StyledNavLink to="products">Products</StyledNavLink>
-      </nav>
-
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />}></Route>
-        <Route path="/products/:productId" element={<ProductDetails />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />}>
+            <Route path="mission" element={<Mission />} />
+            <Route path="team" element={<Team />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+
+          <Route path="products" element={<Products />}></Route>
+          <Route path="products/:productId" element={<ProductDetails />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Routes>
     </>
   );
