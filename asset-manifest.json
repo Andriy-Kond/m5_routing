@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/m5_routing/static/js/main.ab380dba.js",
+    "main.js": "/m5_routing/static/js/main.d89496c2.js",
     "index.html": "/m5_routing/index.html",
-    "main.ab380dba.js.map": "/m5_routing/static/js/main.ab380dba.js.map"
+    "main.d89496c2.js.map": "/m5_routing/static/js/main.d89496c2.js.map"
   },
   "entrypoints": [
-    "static/js/main.ab380dba.js"
+    "static/js/main.d89496c2.js"
   ]
 }
