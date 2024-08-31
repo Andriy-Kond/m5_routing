@@ -1,6 +1,6 @@
-import { getProducts } from "js/fakeAPI";
+import { getProducts } from "navigation/js/fakeAPI";
 
-import ProductsList from "components/ProductsList";
+import ProductsList from "navigation/components/ProductsList";
 
 function Products() {
   const products = getProducts();

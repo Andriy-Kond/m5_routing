@@ -1,4 +1,4 @@
-import { getProductById } from "js/fakeAPI";
+import { getProductById } from "navigation/js/fakeAPI";
 import { useParams } from "react-router-dom";
 
 function ProductDetails() {
