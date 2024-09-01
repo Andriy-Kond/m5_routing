@@ -31,6 +31,7 @@ function About() {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
+
       <Outlet />
     </>
   );

@@ -9,13 +9,13 @@ import NotFoundPage from "navigation/pages/NotFoundPage";
 import Mission from "navigation/components/Mission";
 import Team from "navigation/components/Team";
 import Reviews from "navigation/components/Reviews";
-import SharedLayout from "navigation/components/SharedLayout";
+import NavigationRootLayout from "navigation/NavigationRootLayout";
 
 function Navigation() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
+        <Route path="/" element={<NavigationRootLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />}>
             <Route path="mission" element={<Mission />} />
