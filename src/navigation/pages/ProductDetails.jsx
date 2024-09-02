@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 function ProductDetails() {
   const { productId } = useParams();
-
   const { name } = getProductById(productId);
 
   return (

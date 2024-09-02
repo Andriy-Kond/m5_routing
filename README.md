@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+# useParams()
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    <Route path="products/:productId" element={<ProductDetails />} />
 
-## Available Scripts
+### Отримання параметру
 
-In the project directory, you can run:
+    function ProductDetails() {
+      const { productId } = useParams();
+      const { name } = getProductById(productId);
 
-### `npm start`
+      return (
+        <>
+          <main>
+            <p>
+              It is details of product with <b> productID: {productId} </b> and
+              <b> name: {name}</b>
+            </p>
+            <img src="https://via.placeholder.com/960x240" alt="" />
+            <div>
+              <h2>
+                Product - {name} - {productId}
+              </h2>
+              <p>
+                Lorem ipsum dolor,
+              </p>
+            </div>
+          </main>
+        </>
+      );
+    }
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# useSearchParams()
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Читання і запис у адресний рядок:
 
-### `npm test`
+    function Products() {
+      const products = getProducts();
+      const [searchParams, setSearchParams] = useSearchParams();
+      const productName = searchParams.get("searchValue") ?? "";
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      const visibleProducts = products.filter(product =>
+        product.name.toLowerCase().includes(productName.toLowerCase()),
+      );
 
-### `npm run build`
+      const updateFilterInput = searchValue => {
+        const newParams = searchValue === "" ? {} : { searchValue };
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        setSearchParams(newParams);
+      };
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+      return (
+        <>
+          <p>The PRODUCTS page</p>
+          <SearchBox value={productName} updateFilterInput={updateFilterInput} />
+          <ProductsList products={visibleProducts} />
+        </>
+      );
+    }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Відстеження змін в адресному рядку за допомогою useSearchParams()
 
-### `npm run eject`
+Якщо змінюється рядок запиту, хук useSearchParams повертає нове значення параметрів і оновлюється, тому можна зреагувати на це і запустити ефект.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    const SignUp = () => {
+      const [user, setUser] = useState(null);
+      const [searchParams, setSearchParams] = useSearchParams();
+      const username = searchParams.get("username") ?? "";
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+      useEffect(() => {
+        // Тут виконуємо асинхронну операцію,
+        // наприклад HTTP-запит за інформацією про користувача
+        if (username === "") return;
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+        async function fetchUser() {
+          const user = await fakeAPI.getUser(username);
+          setUser(user);
+        }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+        fetchUser();
+      }, [username]);
 
-## Learn More
+      const handleSubmit = e => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        setSearchParams({ username: form.elements.username.value });
+        form.reset();
+      };
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+      return (
+        <>
+          <form onSubmit={handleSubmit}>
+            <input type="text" name="username" />
+            <button type="submit">Search</button>
+          </form>
+          {user && <UserInfo user={user} />}
+        </>
+      );
+    };
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# useNavigate();
 
-### Code Splitting
+### Навігація за допомогою useNavigate()
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    export const Login = () => {
+      const navigate = useNavigate();
 
-### Analyzing the Bundle Size
+      const handleSubmit = async values => {
+        const response = await fakeAPI.login(values);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        if (response.success) {
+          navigate("/profile", { replace: true });
+          // Якщо вказати значення true, то новий лист підмінить собою найвищий. Це використовується досить рідко, наприклад при логіні, щоб користувач не зміг повернутися кнопкою «назад» на сторінку логіна після входу, адже він уже в системі і робити йому там нічого.
+        }
+      };
 
-### Making a Progressive Web App
+      return (
+        <div>
+          <h1>Login page</h1>
+          <LoginForm onSubmit={handleSubmit} />
+        </div>
+      );
+    };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Навігація за допомогою компонента Navigate
 
-### Advanced Configuration
+    import { Navigate, useState } from "react-router-dom";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    export const Login = () => {
+      const [isLoginSuccess, setIsLoginSuccess] = useState(false);
 
-### Deployment
+      const handleSubmit = async values => {
+        const response = await fakeAPI.login(values);
+        setIsLoginSuccess(response.success);
+      };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+      if (isLoginSuccess) {
+        return <Navigate to="/profile" replace />;
+      }
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+      return (
+        <div>
+          <h1>Login page</h1>
+          <LoginForm onSubmit={handleSubmit} />
+        </div>
+      );
+    };

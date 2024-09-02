@@ -8,6 +8,7 @@ import ProductsList from "navigation/components/ProductsList";
 function Products() {
   const products = getProducts();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const productName = searchParams.get("searchValue") ?? "";
 
   const visibleProducts = products.filter(product =>
