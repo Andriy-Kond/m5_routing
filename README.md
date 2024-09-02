@@ -31,6 +31,21 @@
 
 # useSearchParams()
 
+Метод get() завжди поверне рядок незалежно від значення параметра, яке вказано у рядку запиту. Наприклад, для такого рядка запиту ?name=hoodie&maxPrice=500&inStock=true ми отримаємо такі значення параметрів.
+
+    const [searchParams] = useSearchParams();
+
+    const name = searchParams.get("name");
+    console.log(name, typeof name); // "hoodie", string
+
+    const maxPrice = searchParams.get("maxPrice");
+    console.log(maxPrice, typeof maxPrice); // "500", string
+
+    const inStock = searchParams.get("inStock");
+    console.log(inStock, typeof inStock); // "true", string
+
+Якщо параметри це числа чи були, для отримання значення правильного типу потрібно виконати приведення типів. Це можна зробити вбудованими класами Number(value) та Boolean(value).
+
 ### Читання і запис у адресний рядок:
 
     function Products() {
@@ -97,6 +112,24 @@
       );
     };
 
+## Параметри як об'єкт
+
+Якщо рядок запиту містить кілька параметрів, постійно використовувати метод get() може бути незручно. Ось простий спосіб перетворити екземпляр класу URLSearchParams у звичайний об'єкт із властивостями.
+
+    const [searchParams] = useSearchParams();
+    const params = useMemo(
+      () => Object.fromEntries([...searchParams]),
+      [searchParams],
+    );
+    const { name, maxPrice, inStock } = params;
+
+Object.entries - метод, який перетворює об'єкт на масив пар ключ-значення.
+Object.fromEntries - метод, який перетворює масив пар ключ-значення у об'єкт.
+
+#### Мемоізація
+
+Мемоізуємо операцію перетворення об'єкта параметрів, щоб отримувати посилання на новий об'єкт лише якщо зміняться параметри рядка запиту, а не при кожному рендері компоненту.
+
 # useNavigate();
 
 ### Навігація за допомогою useNavigate()
@@ -143,4 +176,72 @@
           <LoginForm onSubmit={handleSubmit} />
         </div>
       );
+    };
+
+# useLocation()
+
+location: https://gomerch.it/products?name=hoodie&color=orange&maxPrice=500#agreement
+
+    {
+      "pathname": "/products",
+      "search": "?name=hoodie&color=orange&maxPrice=500",
+      "hash": "#agreement",
+      "state": null,
+      "key": "random-browser-generated-id"
+    }
+
+    const App = () => {
+      const location = useLocation();
+
+      useEffect(() => {
+        Analytics.send(location);
+      }, [location]);
+
+      return <div>...</div>;
+    };
+
+state - довільне значення, яке містить додаткову інформацію, пов'язану з розташуванням, але не відображається в URL-адресі. Задається розробником. Використовується для передачі між маршрутами.
+
+Властивість state об'єкта розташування дозволяє передавати довільні дані при навігації від одного маршруту до іншого. Для цього використовуємо пропс state компонента Link і передамо об'єкт із властивістю from - звідки прийшов юзер. Значення пропсу state не має зумовленої структури та може бути довільним, на розсуд розробника.
+
+    const Products = () => {
+      return (
+        <Link to="/products/h-1" state={{ from: "/dashboard?name=hoodie" }}>
+          Navigate to product h-1
+        </Link>
+      );
+    };
+
+    const ProductDetails = () => {
+      const location = useLocation();
+      console.log(location.state); // { from: "/dashboard?name=hoodie" }
+
+      return <Link to={location.state.from}>Back to products</Link>;
+    };
+
+Можна передавати весь об'єкт location
+
+    const Products = () => {
+      const location = useLocation();
+
+      return (
+        <Link to="/product/h-1" state={{ from: location }}>
+          Navigate to product h-1
+        </Link>
+      );
+    };
+
+    const ProductDetails = () => {
+      const location = useLocation();
+      console.log(location.state);
+
+      const backLinkHref = location.state?.from ?? "/products";
+
+      // /products -> products/h-1
+      // { from: { pathname: "/products", search: "" } }
+
+      // /products?name=hoodie -> products/h-1
+      // { from: { pathname: "/products", search: "?name=hoodie" } }
+
+      return <Link to={backLinkHref}>Back to products</Link>;
     };
