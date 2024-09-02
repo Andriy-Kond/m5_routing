@@ -16,7 +16,7 @@ export const Login = () => {
   return (
     <div>
       <h1>Login page</h1>
-      {/* <LoginForm onSubmit={handleSubmit} /> */}
+      <LoginForm onSubmit={handleSubmit} />
     </div>
   );
 };
