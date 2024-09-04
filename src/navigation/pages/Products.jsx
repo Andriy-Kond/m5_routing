@@ -6,9 +6,12 @@ import SearchBox from "navigation/components/SearchBox";
 import ProductsList from "navigation/components/ProductsList";
 
 function Products() {
+  // useEffect(() => {
+  //   // HTTP запит, якщо потрібен
+  // }, []);
+
   const products = getProducts();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const productName = searchParams.get("searchValue") ?? "";
 
   const visibleProducts = products.filter(product =>

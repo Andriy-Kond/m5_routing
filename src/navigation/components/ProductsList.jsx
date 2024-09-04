@@ -11,7 +11,9 @@ function ProductsList({ products }) {
       <Container>
         {products.map(product => (
           <CardWrapper key={product.id}>
-            <Link to={`${product.id}`} state={location}>
+            <Link to={`${product.id}`} state={{ from: location }}>
+              {/* to={`${product.id}`} - треба робити рядком, бо якщо у id буде цифра, то лінк створюється не правильно і не спрацює */}
+
               <img src="https://via.placeholder.com/200x100" alt="plug" />
               <ProductName> {product.name}</ProductName>
             </Link>

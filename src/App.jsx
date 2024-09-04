@@ -1,8 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import { lazy } from "react";
 
 import AppRootLayout from "AppRootLayout";
-import Navigation from "navigation";
-import Signup from "signup";
+
+// import Navigation from "navigation";
+// import Signup from "signup";
+const Navigation = lazy(() => import("navigation"));
+const Signup = lazy(() => import("signup"));
 
 function App() {
   return (
