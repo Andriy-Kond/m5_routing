@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkm5_routing=self.webpackChunkm5_routing||[]).push([[466],{466:(e,n,r)=>{r.r(n),r.d(n,{default:()=>u});var t=r(475),s=r(579);const u=function(){return(0,s.jsx)(s.Fragment,{children:(0,s.jsxs)("p",{children:["This page not exist. Please return to our ",(0,s.jsx)(t.N_,{to:"/",children:"home page"})]})})}}}]);
+//# sourceMappingURL=466.d468c159.chunk.js.map

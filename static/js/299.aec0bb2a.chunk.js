@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkm5_routing=self.webpackChunkm5_routing||[]).push([[299],{299:(e,i,t)=>{t.r(i),t.d(i,{default:()=>s});var n=t(579);const u=function(){return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)("p",{children:"The HOME page"}),(0,n.jsx)("h1",{children:"Welcome"}),(0,n.jsx)("p",{children:"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto, laboriosam placeat incidunt rem illum animi nemo quibusdam quia voluptatum voluptate."})]})};const s=function(){return(0,n.jsx)(u,{})}}}]);
+//# sourceMappingURL=299.aec0bb2a.chunk.js.map
