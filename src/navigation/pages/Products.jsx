@@ -14,20 +14,27 @@ function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const productName = searchParams.get("searchValue") ?? "";
 
-  const visibleProducts = products.filter(product =>
-    product.name.toLowerCase().includes(productName.toLowerCase()),
-  );
-
   const updateFilterInput = searchValue => {
     const newParams = searchValue === "" ? {} : { searchValue };
 
     setSearchParams(newParams);
   };
 
+  const visibleProducts = products.filter(product =>
+    product.name.toLowerCase().includes(productName.toLowerCase()),
+  );
+
   return (
     <>
       <p>The PRODUCTS page</p>
-      <SearchBox value={productName} updateFilterInput={updateFilterInput} />
+      {/* <SearchBox value={productName} updateFilterInput={updateFilterInput} /> */}
+
+      <input
+        type="text"
+        onChange={e => updateFilterInput(e.target.value)}
+        value={productName}
+      />
+
       <ProductsList products={visibleProducts} />
     </>
   );
