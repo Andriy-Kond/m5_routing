@@ -41,9 +41,8 @@ function Navigation() {
             <Route path="gallery" element={<Gallery />} />
             <Route path="feedbacks" element={<Feedbacks />} />
           </Route>
-
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
