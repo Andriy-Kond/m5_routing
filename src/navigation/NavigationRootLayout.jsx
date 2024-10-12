@@ -8,7 +8,7 @@ import { Suspense } from "react";
 const style = ({ isActive, isPending, isTransitioning }) => {
   return {
     fontWeight: isActive ? "bold" : "",
-    color: isPending ? "red" : "black",
+    color: isPending ? "#ff4500" : "#000",
     viewTransitionName: isTransitioning ? "slide" : "",
 
     padding: "8px 16px",

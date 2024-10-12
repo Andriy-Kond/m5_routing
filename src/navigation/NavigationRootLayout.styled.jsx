@@ -43,8 +43,12 @@ const style = ({ isActive, isPending, isTransitioning }) => {
 
 // Стилізація за допомогою @emotion-styled
 const StyledNavLink = styled(NavLink)`
-  font-weight: normal;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
   color: #000;
+  font-weight: 500;
+
   transition: transform 0.3s ease;
 
   &.active {
