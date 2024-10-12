@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { NavLink } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 
 export const Container = styled.div`
@@ -26,47 +27,36 @@ export const Logo = styled.p`
   margin: 0;
 `;
 
-// export const Link = styled(NavLink)`
-//   padding: 8px 16px;
-//   border-radius: 4px;
-//   text-decoration: none;
-//   color: black;
-//   font-weight: 500;
+// Стилізація за допомогою звичайного React Router:
+const style = ({ isActive, isPending, isTransitioning }) => {
+  return {
+    fontWeight: isActive ? "bold" : "",
+    color: isPending ? "#ff4500" : "#000",
+    viewTransitionName: isTransitioning ? "slide" : "",
 
-//   &.active {
-//     color: white;
-//     background-color: orangered;
-//   }
-// `;
+    padding: "8px 16px",
+    borderRadius: "4px",
+    textDecoration: "none",
+    fontSize: "26px",
+  };
+};
 
-// const style = ({ isActive, isPending, isTransitioning }) => {
-//   return {
-//     fontWeight: isActive ? "bold" : "",
-//     color: isPending ? "red" : "black",
-//     viewTransitionName: isTransitioning ? "slide" : "",
+// Стилізація за допомогою @emotion-styled
+const StyledNavLink = styled(NavLink)`
+  font-weight: normal;
+  color: #000;
+  transition: transform 0.3s ease;
 
-//     padding: "8px 16px",
-//     borderRadius: "4px",
-//     textDecoration: "none",
-//     fontSize: "26px",
-//   };
-// };
+  &.active {
+    font-weight: bold;
+    color: #ff4500;
+  }
 
-// const StyledNavLink = styled(NavLink)`
-//   font-weight: normal;
-//   color: #000;
-//   transition: transform 0.3s ease;
+  &.pending {
+    color: #0011ff;
+  }
 
-//   &.active {
-//     font-weight: bold;
-//     color: #ff4500;
-//   }
-
-//   &.pending {
-//     color: red;
-//   }
-
-//   &.transitioning {
-//     transform: scale(1.05);
-//   }
-// `;
+  &.transitioning {
+    transform: scale(1.15);
+  }
+`;
