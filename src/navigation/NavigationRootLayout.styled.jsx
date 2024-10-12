@@ -38,3 +38,35 @@ export const Logo = styled.p`
 //     background-color: orangered;
 //   }
 // `;
+
+// const style = ({ isActive, isPending, isTransitioning }) => {
+//   return {
+//     fontWeight: isActive ? "bold" : "",
+//     color: isPending ? "red" : "black",
+//     viewTransitionName: isTransitioning ? "slide" : "",
+
+//     padding: "8px 16px",
+//     borderRadius: "4px",
+//     textDecoration: "none",
+//     fontSize: "26px",
+//   };
+// };
+
+// const StyledNavLink = styled(NavLink)`
+//   font-weight: normal;
+//   color: #000;
+//   transition: transform 0.3s ease;
+
+//   &.active {
+//     font-weight: bold;
+//     color: #ff4500;
+//   }
+
+//   &.pending {
+//     color: red;
+//   }
+
+//   &.transitioning {
+//     transform: scale(1.05);
+//   }
+// `;
